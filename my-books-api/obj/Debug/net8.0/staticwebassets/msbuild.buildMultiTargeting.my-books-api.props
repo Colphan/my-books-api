@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/my-books-api.props" />
+</Project>
