@@ -20,6 +20,21 @@ namespace my_books_api.Controllers
     {
              _booksService = booksService;
     }
+[HttpGet("get-all-books")]
+public IActionResult GetAllBooks()
+        {
+            var allBooks = _booksService.GetAllBooks();
+            return Ok(allBooks);
+        }
+
+[HttpGet("get-book-by-id/{id}")]
+
+public IActionResult GetBookById(int id)
+        {
+            var book = _booksService.GetBookById(id);
+            return Ok(book);
+        }
+
 
 [HttpPost("add-book")]
 
@@ -28,7 +43,16 @@ public IActionResult AddBook([FromBody]BookVM book)
         _booksService.AddBook(book);
         return Ok();
 
-    }   
+    }
+
+ [HttpPut ("update-book-by-id/{id}")] 
+
+ public IActionResult UpdateBookById(int id, [FromBody]BookVM book)
+        {
+            var updatedBook = _booksService.UpdateBookById(id, book);
+            return Ok(updatedBook);
+        }  
+
   }
 
 }
