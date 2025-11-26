@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using my_books_api.Data;
+using my_books_api.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Agregar controladores
 builder.Services.AddControllers();
+
+// Configure Services
+builder.Services.AddTransient<BooksService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -23,7 +28,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+AppDbInitializer.Seed(app);
+
 app.UseHttpsRedirection();
+
+// Mapea los controllers 👈 NECESARIO
+app.MapControllers();
 
 // Redirige al Swagger por defecto
 app.MapGet("/", () => Results.Redirect("/swagger"));
