@@ -14,6 +14,8 @@ builder.Services.AddControllers();
 
 // Configure Services
 builder.Services.AddTransient<BooksService>();
+builder.Services.AddTransient<AuthorsService>();
+builder.Services.AddTransient<PublishersService>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

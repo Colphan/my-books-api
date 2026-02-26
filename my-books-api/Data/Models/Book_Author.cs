@@ -13,7 +13,6 @@ namespace my_books_api.Data.Models
 
     public Book Book { get; set; }
 
-
     public int AuthorId { get; set; }
 
     public Author Author { get; set; }
