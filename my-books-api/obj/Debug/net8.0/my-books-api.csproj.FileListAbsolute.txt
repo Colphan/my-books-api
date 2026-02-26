@@ -20,11 +20,6 @@
 /workspaces/my-books-api/my-books-api/obj/Debug/net8.0/my-books-api.sourcelink.json
 /workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets.build.json
 /workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets.development.json
-/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets/msbuild.my-books-api.Microsoft.AspNetCore.StaticWebAssets.props
-/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets/msbuild.build.my-books-api.props
-/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.my-books-api.props
-/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.my-books-api.props
-/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets.pack.json
 /workspaces/my-books-api/my-books-api/obj/Debug/net8.0/scopedcss/bundle/my-books-api.styles.css
 /workspaces/my-books-api/my-books-api/obj/Debug/net8.0/my-books.389C9E6F.Up2Date
 /workspaces/my-books-api/my-books-api/obj/Debug/net8.0/my-books-api.dll
@@ -158,3 +153,11 @@
 /workspaces/my-books-api/my-books-api/bin/Debug/net8.0/runtimes/win-x64/native/e_sqlite3.dll
 /workspaces/my-books-api/my-books-api/bin/Debug/net8.0/runtimes/win-x86/native/e_sqlite3.dll
 /workspaces/my-books-api/my-books-api/bin/Debug/net8.0/runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/rpswa.dswa.cache.json
+/workspaces/my-books-api/my-books-api/bin/Debug/net8.0/my-books-api.staticwebassets.endpoints.json
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/rjimswa.dswa.cache.json
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/rjsmrazor.dswa.cache.json
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/rjsmcshtml.dswa.cache.json
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets.build.json.cache
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/staticwebassets.build.endpoints.json
+/workspaces/my-books-api/my-books-api/obj/Debug/net8.0/swae.build.ex.cache

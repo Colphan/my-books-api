@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ObfIs5YPsY8=",
+  "dgSpecHash": "RCsRAMHuWJc=",
   "success": true,
   "projectFilePath": "/workspaces/my-books-api/my-books-api/my-books-api.csproj",
   "expectedPackageFiles": [
@@ -60,7 +60,10 @@
     "/home/codespace/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/system.text.encodings.web/9.0.10/system.text.encodings.web.9.0.10.nupkg.sha512",
     "/home/codespace/.nuget/packages/system.text.json/9.0.10/system.text.json.9.0.10.nupkg.sha512",
-    "/home/codespace/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512"
+    "/home/codespace/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.netcore.app.ref/8.0.22/microsoft.netcore.app.ref.8.0.22.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.22/microsoft.netcore.app.host.linux-x64.8.0.22.nupkg.sha512"
   ],
   "logs": []
 }
