@@ -36,11 +36,11 @@ public IActionResult GetBookById(int id)
         }
 
 
-[HttpPost("add-book")]
+[HttpPost("add-book-with-authors")]
 
-public IActionResult AddBook([FromBody]BookVM book)
+public IActionResult AdBook([FromBody]BookVM book)
     {
-        _booksService.AddBook(book);
+        _booksService.AddBookWithAuthors(book);
         return Ok();
 
     }

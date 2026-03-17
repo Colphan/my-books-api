@@ -29,7 +29,6 @@ namespace my_books_api.Data
                             DateRead = DateTime.Now.AddDays(-10),
                             Rate = 9,
                             Genre = "Fantasy",
-                            Author = "J.R.R. Tolkien",
                             CoverUrl = "https://example.com/hobbit.jpg",
                             DateAdded = DateTime.Now
                         },
@@ -40,7 +39,6 @@ namespace my_books_api.Data
                              Description = "A Handbook of Agile Software Craftsmanship",
                              IsRead = false,
                              Genre = "Programming",
-                             Author = "Robert C. Martin",
                              CoverUrl = "https://example.com/cleancode.jpg",
                              DateAdded = DateTime.Now
                          }
