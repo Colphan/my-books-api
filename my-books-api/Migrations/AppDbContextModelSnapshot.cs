@@ -94,7 +94,7 @@ namespace my_books_api.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Books_Authors");
+                    b.ToTable("Book_Authors");
                 });
 
             modelBuilder.Entity("my_books_api.Data.Models.Publisher", b =>

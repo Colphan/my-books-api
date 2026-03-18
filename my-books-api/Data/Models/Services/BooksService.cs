@@ -16,43 +16,84 @@ namespace my_books_api.Data.Services
 
         } 
 
-        public void AddBookWithAuthors(BookVM book)
+       public void AddBookWithAuthors(BookVM book)
+{
+    // VALIDAR Publisher
+    var publisherExists = _context.Publishers
+        .Any(p => p.Id == book.PublisherId);
 
+    if (!publisherExists)
+        throw new Exception("Publisher not found");
+
+    // VALIDAR Authors
+    foreach (var authorId in book.AuthorIds)
+    {
+        var authorExists = _context.Authors
+            .Any(a => a.Id == authorId);
+
+        if (!authorExists)
+            throw new Exception($"Author with ID {authorId} not found");
+    }
+
+    // CREAR BOOK
+    var _book = new Book()
+    {
+        Title = book.Title,
+        Description = book.Description,
+        IsRead = book.IsRead,
+        DateRead = book.IsRead ? book.DateRead : null,
+        Rate = book.IsRead ? book.Rate : null,
+        Genre = book.Genre,
+        CoverUrl = book.CoverUrl,
+        DateAdded = DateTime.Now,
+        PublisherId = book.PublisherId
+    };
+
+    _context.Books.Add(_book);
+    _context.SaveChanges();
+
+    // RELACIÓN MANY-TO-MANY
+    foreach (var id in book.AuthorIds)
+    {
+        var _book_author = new Book_Author()
         {
+            BookId = _book.Id,
+            AuthorId = id
+        };
 
-            var _book = new Book()
-            {
-                Title = book.Title,
-                Description = book.Description,
-                IsRead = book.IsRead,
-                DateRead = book.IsRead ? book.DateRead.Value : null,
-                Rate = book.IsRead ? book.Rate.Value : null,
-                Genre = book.Genre,
-                CoverUrl = book.CoverUrl,
-                DateAdded = DateTime.Now,
-                PublisherId = book.PublisherId
+        _context.Book_Authors.Add(_book_author);
+    }
 
-            };
-
-            _context.Books.Add(_book);
-            _context.SaveChanges();
-
-            foreach (var id in book.AuthorIds)
-            {
-                var _book_author = new Book_Author()
-                {
-                    BookId = _book.Id,
-                    AuthorId = id
-
-                };
-
-                _context.Books_Authors.Add(_book_author);
-                _context.SaveChanges();
-            }
-        }
+    // GUARDAR TODO JUNTO
+    _context.SaveChanges();
+}
    
    public List<Book> GetAllBooks() => _context.Books.ToList();
-   public Book GetBookById(int bookId) => _context.Books.FirstOrDefault(n => n.Id == bookId);
+   
+
+   public BookWithAuthorsVM GetBookById(int bookId)
+   {
+    var _bookWithAuthors = _context.Books.Where(n => n.Id == bookId).Select(book => new BookWithAuthorsVM()
+    {
+
+        Title = book.Title,
+        Description = book.Description,
+        IsRead = book.IsRead,
+        DateRead = book.IsRead ? book.DateRead : null,
+        Rate = book.IsRead ? book.Rate : null,
+        Genre = book.Genre,
+        CoverUrl = book.CoverUrl,
+        PublisherName = book.Publisher.Name,
+        AuthorNames = book.Book_Authors.Select(n => n.Author.FullName).ToList()
+
+    }).FirstOrDefault();
+
+    return _bookWithAuthors;
+
+   }
+   
+   
+
    
    public Book UpdateBookById(int bookId, BookVM book)
         {

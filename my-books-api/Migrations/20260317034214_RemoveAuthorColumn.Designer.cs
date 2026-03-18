@@ -11,8 +11,8 @@ using my_books_api.Data;
 namespace my_books_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260317025027_RemoveBookAuthorColumn")]
-    partial class RemoveBookAuthorColumn
+    [Migration("20260317034214_RemoveAuthorColumn")]
+    partial class RemoveAuthorColumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

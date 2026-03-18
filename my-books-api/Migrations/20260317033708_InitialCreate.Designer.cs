@@ -11,8 +11,8 @@ using my_books_api.Data;
 namespace my_books_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260207044446_ManyToManyAdded")]
-    partial class ManyToManyAdded
+    [Migration("20260317033708_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,10 +40,6 @@ namespace my_books_api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("CoverUrl")
                         .IsRequired()
@@ -101,7 +97,7 @@ namespace my_books_api.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Book_Authors");
+                    b.ToTable("Books_Authors");
                 });
 
             modelBuilder.Entity("my_books_api.Data.Models.Publisher", b =>
