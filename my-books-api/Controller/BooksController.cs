@@ -12,55 +12,55 @@ namespace my_books_api.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
- public class BooksController : ControllerBase
-{
- public BooksService _booksService;
-
- public BooksController(BooksService booksService)
+    public class BooksController : ControllerBase
     {
-             _booksService = booksService;
-    }
-[HttpGet("get-all-books")]
-public IActionResult GetAllBooks()
+        public BooksService _booksService;
+
+        public BooksController(BooksService booksService)
+        {
+            _booksService = booksService;
+        }
+        [HttpGet("get-all-books")]
+        public IActionResult GetAllBooks()
         {
             var allBooks = _booksService.GetAllBooks();
             return Ok(allBooks);
         }
 
-[HttpGet("get-book-by-id/{id}")]
+        [HttpGet("get-book-by-id/{id}")]
 
-public IActionResult GetBookById(int id)
+        public IActionResult GetBookById(int id)
         {
             var book = _booksService.GetBookById(id);
             return Ok(book);
         }
 
 
-[HttpPost("add-book-with-authors")]
+        [HttpPost("add-book-with-authors")]
 
-public IActionResult AddBook([FromBody]BookVM book)
-    {
-        _booksService.AddBookWithAuthors(book);
-        return Ok();
+        public IActionResult AddBook([FromBody] BookVM book)
+        {
+            _booksService.AddBookWithAuthors(book);
+            return Ok();
 
-    }
+        }
 
- [HttpPut ("update-book-by-id/{id}")] 
+        [HttpPut("update-book-by-id/{id}")]
 
- public IActionResult UpdateBookById(int id, [FromBody]BookVM book)
+        public IActionResult UpdateBookById(int id, [FromBody] BookVM book)
         {
             var updatedBook = _booksService.UpdateBookById(id, book);
             return Ok(updatedBook);
-        } 
+        }
 
- [HttpDelete ("delete-book-by-id/{id}")] 
+        [HttpDelete("delete-book-by-id/{id}")]
 
- public IActionResult DeleteBookById(int id)
+        public IActionResult DeleteBookById(int id)
         {
-           _booksService.DeleteBookById(id);
-           return Ok();
-        }   
+            _booksService.DeleteBookById(id);
+            return Ok();
+        }
 
-  }
+    }
 
 }

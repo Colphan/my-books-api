@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace my_books_api.Data.Models
 {
 
-    public class Publisher{
+    public class Publisher
+    {
 
         public int Id { get; set; }
 
@@ -14,6 +15,6 @@ namespace my_books_api.Data.Models
 
         // Navegations properties
 
-        public List<Book> Books { get; set;}
+        public List<Book> Books { get; set; }
     }
 }

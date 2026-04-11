@@ -14,91 +14,91 @@ namespace my_books_api.Data.Services
         {
             _context = context;
 
-        } 
+        }
 
-       public void AddBookWithAuthors(BookVM book)
-{
-    // VALIDAR Publisher
-    var publisherExists = _context.Publishers
-        .Any(p => p.Id == book.PublisherId);
-
-    if (!publisherExists)
-        throw new Exception("Publisher not found");
-
-    // VALIDAR Authors
-    foreach (var authorId in book.AuthorIds)
-    {
-        var authorExists = _context.Authors
-            .Any(a => a.Id == authorId);
-
-        if (!authorExists)
-            throw new Exception($"Author with ID {authorId} not found");
-    }
-
-    // CREAR BOOK
-    var _book = new Book()
-    {
-        Title = book.Title,
-        Description = book.Description,
-        IsRead = book.IsRead,
-        DateRead = book.IsRead ? book.DateRead : null,
-        Rate = book.IsRead ? book.Rate : null,
-        Genre = book.Genre,
-        CoverUrl = book.CoverUrl,
-        DateAdded = DateTime.Now,
-        PublisherId = book.PublisherId
-    };
-
-    _context.Books.Add(_book);
-    _context.SaveChanges();
-
-    // RELACIÓN MANY-TO-MANY
-    foreach (var id in book.AuthorIds)
-    {
-        var _book_author = new Book_Author()
+        public void AddBookWithAuthors(BookVM book)
         {
-            BookId = _book.Id,
-            AuthorId = id
-        };
+            // VALIDAR Publisher
+            var publisherExists = _context.Publishers
+                .Any(p => p.Id == book.PublisherId);
 
-        _context.Book_Authors.Add(_book_author);
-    }
+            if (!publisherExists)
+                throw new Exception("Publisher not found");
 
-    // GUARDAR TODO JUNTO
-    _context.SaveChanges();
-}
-   
-   public List<Book> GetAllBooks() => _context.Books.ToList();
-   
+            // VALIDAR Authors
+            foreach (var authorId in book.AuthorIds)
+            {
+                var authorExists = _context.Authors
+                    .Any(a => a.Id == authorId);
 
-   public BookWithAuthorsVM GetBookById(int bookId)
-   {
-    var _bookWithAuthors = _context.Books.Where(n => n.Id == bookId).Select(book => new BookWithAuthorsVM()
-    {
+                if (!authorExists)
+                    throw new Exception($"Author with ID {authorId} not found");
+            }
 
-        Title = book.Title,
-        Description = book.Description,
-        IsRead = book.IsRead,
-        DateRead = book.IsRead ? book.DateRead : null,
-        Rate = book.IsRead ? book.Rate : null,
-        Genre = book.Genre,
-        CoverUrl = book.CoverUrl,
-        PublisherName = book.Publisher.Name,
-        AuthorNames = book.Book_Authors.Select(n => n.Author.FullName).ToList()
+            // CREAR BOOK
+            var _book = new Book()
+            {
+                Title = book.Title,
+                Description = book.Description,
+                IsRead = book.IsRead,
+                DateRead = book.IsRead ? book.DateRead : null,
+                Rate = book.IsRead ? book.Rate : null,
+                Genre = book.Genre,
+                CoverUrl = book.CoverUrl,
+                DateAdded = DateTime.Now,
+                PublisherId = book.PublisherId
+            };
 
-    }).FirstOrDefault();
+            _context.Books.Add(_book);
+            _context.SaveChanges();
 
-    return _bookWithAuthors;
+            // RELACIÓN MANY-TO-MANY
+            foreach (var id in book.AuthorIds)
+            {
+                var _book_author = new Book_Author()
+                {
+                    BookId = _book.Id,
+                    AuthorId = id
+                };
 
-   }
-   
-   
+                _context.Book_Authors.Add(_book_author);
+            }
 
-   
-   public Book UpdateBookById(int bookId, BookVM book)
+            // GUARDAR TODO JUNTO
+            _context.SaveChanges();
+        }
+
+        public List<Book> GetAllBooks() => _context.Books.ToList();
+
+
+        public BookWithAuthorsVM GetBookById(int bookId)
+        {
+            var _bookWithAuthors = _context.Books.Where(n => n.Id == bookId).Select(book => new BookWithAuthorsVM()
+            {
+
+                Title = book.Title,
+                Description = book.Description,
+                IsRead = book.IsRead,
+                DateRead = book.IsRead ? book.DateRead : null,
+                Rate = book.IsRead ? book.Rate : null,
+                Genre = book.Genre,
+                CoverUrl = book.CoverUrl,
+                PublisherName = book.Publisher.Name,
+                AuthorNames = book.Book_Authors.Select(n => n.Author.FullName).ToList()
+
+            }).FirstOrDefault();
+
+            return _bookWithAuthors;
+
+        }
+
+
+
+
+        public Book UpdateBookById(int bookId, BookVM book)
         {
             var _book = _context.Books.FirstOrDefault(n => n.Id == bookId);
-            if(_book != null)
+            if (_book != null)
             {
                 _book.Title = book.Title;
                 _book.Description = book.Description;
@@ -115,15 +115,15 @@ namespace my_books_api.Data.Services
             return _book;
         }
 
-    public void DeleteBookById( int bookId)
-    {
-    var _book = _context.Books.FirstOrDefault(n => n.Id == bookId); 
-     if(_book != null)
+        public void DeleteBookById(int bookId)
+        {
+            var _book = _context.Books.FirstOrDefault(n => n.Id == bookId);
+            if (_book != null)
             {
                 _context.Books.Remove(_book);
                 _context.SaveChanges();
             }
 
-    }
+        }
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using my_books_api.Data;
 using my_books_api.Data.Services;
+using my_books_api.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,9 +31,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-AppDbInitializer.Seed(app);
+//AppDbInitializer.Seed(app);
 
 app.UseHttpsRedirection();
+
+//Exceptions handling
+//app.ConfigureBuildInExceptionHandler();
+
+app.CustomExceptionMiddleware();
+
 
 // Mapea los controllers 👈 NECESARIO
 app.MapControllers();
