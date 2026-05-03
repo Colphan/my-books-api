@@ -12,39 +12,39 @@ namespace my_books_api.Data.ViewModels
 {
     public class CustomExceptionMiddleware
     {
-    private readonly RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
 
-    public CustomExceptionMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext httpContext)
-    {
-        try
+        public CustomExceptionMiddleware(RequestDelegate next)
         {
-            await _next(httpContext);
+            _next = next;
         }
-        catch (Exception ex)
+
+        public async Task InvokeAsync(HttpContext httpContext)
         {
-            await HandleExceptionAsync(httpContext, ex);
+            try
+            {
+                await _next(httpContext);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(httpContext, ex);
+            }
+        }
+
+        private Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
+        {
+            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            httpContext.Response.ContentType = "application/json";
+
+            var response = new ErrorVM()
+            {
+                StatusCode = httpContext.Response.StatusCode,
+                Message = "Internal server error from the custom middleware",
+                Path = "path-goes-here"
+            };
+
+            return httpContext.Response.WriteAsync(response.ToString());
         }
     }
-
-    private Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
-    {
-                    httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    httpContext.Response.ContentType = "application/json";
-
-                    var response = new ErrorVM()
-                    {
-                         StatusCode = httpContext.Response.StatusCode,
-                            Message = "Internal server error from the custom middleware",
-                            Path = "path-goes-here"
-                    };
-
-                    return httpContext.Response.WriteAsync(response.ToString());
-    }
- }
 }

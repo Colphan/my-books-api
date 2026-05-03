@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using my_books_api.Exceptions;
+using my_books_api.Data.Models;
+using my_books_api.ActionResult;
+
 
 
 namespace my_books_api.Controllers
@@ -22,6 +25,21 @@ namespace my_books_api.Controllers
         public PublishersController(PublishersService publishersService)
         {
             _publishersService = publishersService;
+        }
+
+        [HttpGet("get-all-publishers")]
+
+        public IActionResult GetAllPublishers(string sortBy, string searchString, int pageNumber)
+        {
+            try
+            {
+                var _result = _publishersService.GetAllPublishers(sortBy, searchString, pageNumber);
+                return Ok(_result);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Sorry, we could not load the publishers");
+            }
         }
 
         [HttpPost("add-publisher")]
@@ -47,22 +65,36 @@ namespace my_books_api.Controllers
 
         [HttpGet("get-publisher-by-with-id/{id}")]
 
-        public IActionResult GetPublisherById(int id)
+        public CustomActionResult GetPublisherById(int id)
         {
 
-            throw new Exception("This is an exception that will be  handled by middleware");
+            // throw new Exception("This is an exception that will be handled by middleware");
 
             var _response = _publishersService.GetPublisherById(id);
 
             if (_response != null)
             {
-                return Ok(_response);
+                //return _response;
+                //return Ok(_response);
+                var _responseObj = new CustomActionResultVM()
+                {
+                    Publisher = _response
+                };
+
+                return new CustomActionResult(_responseObj);
+
             }
             else
             {
-                return NotFound();
-            }
+                var _responseObj = new CustomActionResultVM()
+                {
+                    Exception = new Exception("This is comiing from publishers cotroller")
+                };
+                return new CustomActionResult(_responseObj);
 
+                //return null;
+                //return NotFound();
+            }
         }
 
 
@@ -90,7 +122,6 @@ namespace my_books_api.Controllers
             }
 
         }
-
 
     }
 }

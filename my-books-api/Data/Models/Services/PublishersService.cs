@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using my_books_api.Exceptions;
+using my_books_api.Data.Models;
+using my_books_api.Data.Paging;
 
 
 namespace my_books_api.Data.Services
@@ -20,6 +22,38 @@ namespace my_books_api.Data.Services
         {
             _context = context;
 
+        }
+
+        public List<Publisher> GetAllPublishers(string sortBy, string searchString, int? pageNumber)
+        {
+            var allPublishers = _context.Publishers.OrderBy(n => n.Id).ToList();
+
+            // sort
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy)
+                {
+                    case "asc_name":
+                        allPublishers = allPublishers.OrderBy(n => n.Id).ToList();
+                        break;
+
+                    case "desc_name":
+                        allPublishers = allPublishers.OrderByDescending(n => n.Id).ToList();
+                        break;
+                }
+            }
+
+            // filter
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allPublishers = allPublishers.Where(n => n.Name.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
+
+            // Paging
+            int pageSize = 5;
+            return PaginatedList<Publisher>.Create(allPublishers.AsQueryable(), pageNumber ?? 1, pageSize);
+            
         }
 
         public Publisher AddPublisher(PublisherVM publisher)
