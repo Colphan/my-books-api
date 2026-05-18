@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using my_books_api.Data;
 using my_books_api.Data.Services;
 using my_books_api.Exceptions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Agregar controladores
 builder.Services.AddControllers();
+
+//VERSIONING
+builder.Services.AddApiVersioning(config =>
+{
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    //config.ApiVersionReader = new MediaTypeApiVersionReader();
+    config.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 // Configure Services
 builder.Services.AddTransient<BooksService>();
@@ -38,10 +56,10 @@ app.UseHttpsRedirection();
 //Exceptions handling
 //app.ConfigureBuildInExceptionHandler();
 
-app.CustomExceptionMiddleware();
+//app.CustomExceptionMiddleware();
 
 
-// Mapea los controllers 👈 NECESARIO
+// Mapea los controllers/ NECESARIO
 app.MapControllers();
 
 // Redirige al Swagger por defecto
