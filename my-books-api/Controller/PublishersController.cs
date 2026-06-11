@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using my_books_api.Exceptions;
 using my_books_api.Data.Models;
 using my_books_api.ActionResult;
-
+using Microsoft.Extensions.Logging;
 
 
 namespace my_books_api.Controllers
@@ -21,47 +21,53 @@ namespace my_books_api.Controllers
     public class PublishersController : ControllerBase
     {
         private PublishersService _publishersService;
+        private readonly ILogger<PublishersController> _logger;
+        private readonly LogsService _logsService;
 
-        public PublishersController(PublishersService publishersService)
+        public PublishersController(PublishersService publishersService, ILogger<PublishersController> logger, LogsService logsService)
         {
+
             _publishersService = publishersService;
+            _logger = logger;
+            _logsService = logsService;
         }
 
-        [HttpGet("get-all-publishers")]
+[HttpGet("get-all-publishers")]
+public IActionResult GetAllPublishers(
+    string? sortBy,
+    string? searchString,
+    int pageNumber = 1)
+{
+    try
+    {
+        Console.WriteLine("ENTERED GET ALL");
 
-        public IActionResult GetAllPublishers(string sortBy, string searchString, int pageNumber)
-        {
-            try
-            {
-                var _result = _publishersService.GetAllPublishers(sortBy, searchString, pageNumber);
-                return Ok(_result);
-            }
-            catch (Exception)
-            {
-                return BadRequest("Sorry, we could not load the publishers");
-            }
-        }
+        _logsService.AddLog(
+            "Information",
+            "GetAllPublishers executed"
+        );
 
-        [HttpPost("add-publisher")]
+        Console.WriteLine("AFTER ADD LOG");
 
-        public IActionResult AddPublisher([FromBody] PublisherVM publisher)
-        {
-            try
-            {
-                var newPublisher = _publishersService.AddPublisher(publisher);
-                return Created(nameof(AddPublisher), newPublisher);
-            }
-            catch (PublisherNameException ex)
-            {
-                return BadRequest($"{ex.Message}, Publisher name: {ex.PublisherName}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+        _logger.LogInformation(
+            "This is a log in GetAllPublishers()"
+        );
 
+        var _result =
+            _publishersService.GetAllPublishers(
+                sortBy,
+                searchString,
+                pageNumber
+            );
 
-        }
+        return Ok(_result);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+        return BadRequest(ex.Message);
+    }
+}
 
         [HttpGet("get-publisher-by-with-id/{id}")]
 

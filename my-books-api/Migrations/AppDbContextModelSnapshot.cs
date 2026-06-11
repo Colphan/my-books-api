@@ -97,6 +97,38 @@ namespace my_books_api.Migrations
                     b.ToTable("Book_Authors");
                 });
 
+            modelBuilder.Entity("my_books_api.Data.Models.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Exception")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LogEvent")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Properties")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("my_books_api.Data.Models.Publisher", b =>
                 {
                     b.Property<int>("Id")
